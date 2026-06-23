@@ -1,11 +1,12 @@
 package com.influcollab.service;
 
 import com.influcollab.entity.User;
+import com.influcollab.exception.EmailAlreadyExistsException;
+import com.influcollab.exception.UserNotFoundException;
 import com.influcollab.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -17,6 +18,11 @@ public class UserService {
     }
 
     public User createUser(User user) {
+
+        if (repository.existsByEmail(user.getEmail())) {
+            throw new EmailAlreadyExistsException(user.getEmail());
+        }
+
         return repository.save(user);
     }
 
@@ -24,14 +30,15 @@ public class UserService {
         return repository.findAll();
     }
 
-    public Optional<User> getUserById(Long id) {
-        return repository.findById(id);
+    public User getUserById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
     }
 
     public User updateUser(Long id, User updatedUser) {
 
         User user = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException(id));
 
         user.setName(updatedUser.getName());
         user.setSurname(updatedUser.getSurname());
@@ -44,6 +51,10 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
-        repository.deleteById(id);
+        User user = repository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+
+        repository.delete(user);
     }
+
 }
