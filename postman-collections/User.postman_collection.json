@@ -1,0 +1,327 @@
+{
+  "info": {
+    "_postman_id": "4bb341e7-664d-4924-a6af-48bf6a314f9f",
+    "name": "User",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56064777",
+    "_collection_link": "https://go.postman.co/collection/56064777-4bb341e7-664d-4924-a6af-48bf6a314f9f?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Positive scenarios",
+      "item": [
+        {
+          "name": "Single user - 200 OK",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "1"
+              ]
+            },
+            "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+          },
+          "response": []
+        },
+        {
+          "name": "All users - 200 OK",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create a new user - 200 OK",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"John\",\r\n    \"surname\": \"Smith\",\r\n    \"channelName\": \"john_travel\",\r\n    \"email\": \"john_{{$randomUUID}}@test.com\",\r\n    \"phoneNumber\": \"123456789\",\r\n    \"city\": \"Warsaw\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete user - 200 OK",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/14",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "14"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update user data - 200 OK",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Jonek\",\r\n    \"surname\": \"Smith\",\r\n    \"channelName\": \"john_travel\",\r\n    \"email\": \"john_{{$randomUUID}}@test.com\",\r\n    \"phoneNumber\": \"123456789\",\r\n    \"city\": \"Warsaw\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users/14",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "14"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Negative scenarios",
+      "item": [
+        {
+          "name": "Error 404 - Incorrect URL",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/userrrr",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "userrrr"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Error 404 - Not existing user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/141",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "141"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Error 400 - Missing mandatory fields",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"John\",\r\n  \"surname\": \"Smith\",\r\n  \"channelName\": \"john_travel\",\r\n  \"phoneNumber\": \"123456789\",\r\n  \"city\": \"Warsaw\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Error 409 - Email already exists in DB",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"John\",\r\n  \"surname\": \"Smith\",\r\n  \"channelName\": \"john_travel\",\r\n  \"email\": \"john@test.com\",\r\n  \"phoneNumber\": \"123456789\",\r\n  \"city\": \"Warsaw\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Error 404 - Delete not existing user",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/200",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "200"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Error 404 - Bad request for Update User",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Natalie\",\r\n    \"surname\": \"Smith\",\r\n    \"email\": \"john_{{$randomUUID}}@test.com\",\r\n    \"phoneNumber\": \"123456789\",\r\n    \"city\": \"Warsaw\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users/5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "5"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Error 404 - Update for not existing User",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Natalie\",\r\n    \"surname\": \"Smith\",\r\n    \"channelName\": \"john_travel\",\r\n    \"email\": \"john_{{$randomUUID}}@test.com\",\r\n    \"phoneNumber\": \"123456789\",\r\n    \"city\": \"Warsaw\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users/50",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "50"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

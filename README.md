@@ -1,191 +1,81 @@
 # InfluCollab
 
-## Overview
+InfluCollab is a backend application designed to help influencers discover potential collaboration partners and manage collaboration requests.
 
-InfluCollab is a platform that helps influencers discover and organize collaboration opportunities with other creators.
-
-The application allows influencers to create profiles, showcase upcoming events and activities, browse other influencers, and send collaboration requests.
-
-The main goal is to simplify networking and collaboration between content creators.
+The project is being developed incrementally using an Agile approach, with each iteration delivering a complete and tested piece of functionality.
 
 ---
 
-## Product Vision
+## Current Features
 
-Influencers often discover collaboration opportunities through social media, personal networks, or chance encounters.
+### User Management
 
-InfluCollab provides a dedicated platform where creators can:
+The application currently supports:
 
-* Create professional profiles
-* Share upcoming events and activities
-* Discover other influencers
-* Send and manage collaboration requests
+* Creating influencer profiles
+* Retrieving all profiles
+* Retrieving a profile by ID
+* Updating profile information
+* Deleting profiles
 
----
+### Validation & Error Handling
 
-## MVP Scope
+Implemented API validation and exception handling for common scenarios:
 
-The first version focuses exclusively on influencers.
+* Invalid request data (`400 Bad Request`)
+* Non-existing resources (`404 Not Found`)
+* Duplicate email addresses (`409 Conflict`)
 
-Manager accounts, authentication, notifications, chat, and other advanced features are intentionally excluded from the MVP.
+### API Documentation
 
-### Core Features
+Interactive API documentation is available through Swagger UI.
 
-#### User Profiles
+After starting the application:
 
-Influencers can:
+`http://localhost:8080/swagger-ui/index.html`
 
-* Create a profile
-* View profiles
-* Update profile information
-* Delete profiles
+### API Testing
 
----
+A Postman collection is included and contains both positive and negative test scenarios for all implemented endpoints.
 
-#### Influencer Discovery
+Location:
 
-Influencers can:
-
-* Browse other influencers
-* View profile details
-* View upcoming events published by other influencers
+`/postman/User.postman_collection.json`
 
 ---
 
-#### Events
+## Technology Stack
 
-Influencers can:
-
-* Create events
-* Update events
-* Delete events
-* View events
-
----
-
-#### Collaboration Requests
-
-Influencers can:
-
-* Send collaboration requests to other influencers
-* View received requests
-* Accept requests
-* Reject requests
-
----
-
-## Domain Model
-
-### User
-
-Represents an influencer using the platform.
-
-Fields:
-
-* id
-* name
-* email
-* city
-* bio
-
----
-
-### Event
-
-Represents an upcoming activity, appearance, campaign, or content opportunity.
-
-Fields:
-
-* id
-* title
-* description
-* location
-* startDate
-* endDate
-* owner
-
-Relationship:
-
-User 1 → N Events
-
----
-
-### CollaborationRequest
-
-Represents a collaboration proposal between two influencers.
-
-Fields:
-
-* id
-* sender
-* receiver
-* message
-* status
-* createdAt
-
-Relationships:
-
-User 1 → N Sent Requests
-
-User 1 → N Received Requests
+* Java 21
+* Spring Boot
+* Spring Data JPA
+* PostgreSQL
+* Maven
+* Swagger / OpenAPI
+* Postman
 
 ---
 
 ## Project Structure
 
-```text
-com.influcollab
+The application follows a layered architecture:
 
-├── controller
-├── service
-├── repository
-├── entity
-├── enums
-└── InfluCollabApplication
-```
+* Controller layer
+* Service layer
+* Repository layer
+* Persistence layer (PostgreSQL)
 
-Layer responsibilities:
+Additional components:
 
-* Controller → handles HTTP requests
-* Service → contains business logic
-* Repository → communicates with the database
-* Entity → represents database tables
+* Global exception handling
+* Request validation
+* OpenAPI documentation
 
 ---
 
-## Development Roadmap
+## Running the Application
 
-### Sprint 1
-
-* Spring Boot setup
-* Database configuration
-* User entity
-* User CRUD API
-
-### Sprint 2
-
-* Event entity
-* Event CRUD API
-* User–Event relationship
-
-### Sprint 3
-
-* CollaborationRequest entity
-* Collaboration request workflow
-
-### Sprint 4
-
-* Validation
-* Exception handling
-* Custom queries
-
----
-
-## Future Enhancements
-
-* Authentication and authorization
-* Manager accounts
-* Notifications
-* Chat system
-* Social media integrations
-
+1. Start PostgreSQL
+2. Configure database connection in `application.properties`
+3. Run the Spring Boot application
+4. Open Swagger UI to explore available endpoints
