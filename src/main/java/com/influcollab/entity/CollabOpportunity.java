@@ -1,6 +1,7 @@
 package com.influcollab.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,19 +19,19 @@ public class CollabOpportunity {
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
-    @NotBlank
+    @NotBlank(message = "Title is required")
     @Column(nullable = false)
     private String title;
 
-    @NotBlank
+    @NotBlank(message = "City is required")
     @Column(nullable = false)
     private String city;
 
-    @NotNull
+    @NotNull(message = "Start date is required")
     @Column(nullable = false)
     private LocalDate startDate;
 
-    @NotNull
+    @NotNull(message = "End date is required")
     @Column(nullable = false)
     private LocalDate endDate;
 
@@ -40,6 +41,14 @@ public class CollabOpportunity {
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDate.now();
+    }
+
+    @AssertTrue(message = "End date must be after or equal to start date")
+    public boolean isValidDateRange() {
+        if (startDate == null || endDate == null) {
+            return true;
+        }
+        return !endDate.isBefore(startDate);
     }
 
     public CollabOpportunity() {
