@@ -55,6 +55,22 @@ public class GlobalExceptionHandler {
                 .body(response);
     }
 
+    @ExceptionHandler(CollabNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleCollabOpportunityNotFound(
+            CollabNotFoundException ex) {
+
+        ErrorResponse response = new ErrorResponse(
+                Instant.now(),
+                HttpStatus.NOT_FOUND.value(),
+                "Collaboration Opportunity Not Found",
+                Map.of("message", ex.getMessage())
+        );
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(response);
+    }
+
     @ExceptionHandler(EmailAlreadyExistsException.class)
     public ResponseEntity<ErrorResponse> handleEmailAlreadyExists(
             EmailAlreadyExistsException ex) {
