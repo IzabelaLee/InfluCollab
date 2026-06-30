@@ -3,7 +3,9 @@ package com.influcollab.service;
 import com.influcollab.dto.CollabOpportunityDTO;
 import com.influcollab.dto.CollabOpportunityMapper;
 import com.influcollab.entity.CollabOpportunity;
+import com.influcollab.entity.User;
 import com.influcollab.exception.CollabNotFoundException;
+import com.influcollab.exception.UserNotFoundException;
 import com.influcollab.repository.CollabOpportunityRepository;
 import com.influcollab.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -39,5 +41,38 @@ public class CollabOpportunityService {
         CollabOpportunity opportunity = collabOpportunityRepository.findById(id)
                 .orElseThrow(() -> new CollabNotFoundException(id));
         return mapper.toDTO(opportunity);
+    }
+
+    public List<CollabOpportunityDTO> getAllCollabOpportunitiesByUser(Long userId) {
+        // Validate user exists first
+        userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+
+        return collabOpportunityRepository.findByOwnerId(userId)
+                .stream()
+                .map(mapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public CollabOpportunityDTO getCollabOpportunityByIdAndUserId(Long userId, Long opportunityId) {
+        // Validate user exists
+        userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+
+        // Fetch opportunity and verify it belongs to this user
+        CollabOpportunity opportunity = collabOpportunityRepository.findByIdAndOwnerId(opportunityId, userId)
+                .orElseThrow(() -> new CollabNotFoundException(opportunityId));
+
+        return mapper.toDTO(opportunity);
+    }
+
+    public CollabOpportunityDTO createCollabOpportunity(CollabOpportunity collabOpportunity, Long ownerId) {
+        User owner = userRepository.findById(ownerId)
+                .orElseThrow(() -> new UserNotFoundException(ownerId));
+
+        collabOpportunity.setUser(owner);
+        CollabOpportunity saved = collabOpportunityRepository.save(collabOpportunity);
+
+        return mapper.toDTO(saved);
     }
 }
