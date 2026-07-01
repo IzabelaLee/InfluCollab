@@ -2,6 +2,7 @@ package com.influcollab.service;
 
 import com.influcollab.dto.CollabOpportunityDTO;
 import com.influcollab.dto.CollabOpportunityMapper;
+import com.influcollab.dto.UpdateCollabOpportunityDTO;
 import com.influcollab.entity.CollabOpportunity;
 import com.influcollab.entity.User;
 import com.influcollab.exception.CollabNotFoundException;
@@ -44,7 +45,6 @@ public class CollabOpportunityService {
     }
 
     public List<CollabOpportunityDTO> getAllCollabOpportunitiesByUser(Long userId) {
-        // Validate user exists first
         userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
 
@@ -55,11 +55,9 @@ public class CollabOpportunityService {
     }
 
     public CollabOpportunityDTO getCollabOpportunityByIdAndUserId(Long userId, Long opportunityId) {
-        // Validate user exists
         userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
 
-        // Fetch opportunity and verify it belongs to this user
         CollabOpportunity opportunity = collabOpportunityRepository.findByIdAndOwnerId(opportunityId, userId)
                 .orElseThrow(() -> new CollabNotFoundException(opportunityId));
 
@@ -74,5 +72,59 @@ public class CollabOpportunityService {
         CollabOpportunity saved = collabOpportunityRepository.save(collabOpportunity);
 
         return mapper.toDTO(saved);
+    }
+
+    public CollabOpportunityDTO updateCollabOpportunity(Long userId, Long opportunityId, CollabOpportunity collabOpportunity) {
+        userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+
+        CollabOpportunity existing = collabOpportunityRepository.findById(opportunityId)
+                .orElseThrow(() -> new CollabNotFoundException(opportunityId));
+
+        existing.setTitle(collabOpportunity.getTitle());
+        existing.setCity(collabOpportunity.getCity());
+        existing.setStartDate(collabOpportunity.getStartDate());
+        existing.setEndDate(collabOpportunity.getEndDate());
+        existing.setDescription(collabOpportunity.getDescription());
+
+        CollabOpportunity updated = collabOpportunityRepository.save(existing);
+        return mapper.toDTO(updated);
+    }
+
+    public CollabOpportunityDTO updateCollabOpportunityDetail(Long userId, Long opportunityId, UpdateCollabOpportunityDTO updateDTO) {
+        userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+
+        CollabOpportunity opportunity = collabOpportunityRepository.findByIdAndOwnerId(opportunityId, userId)
+                .orElseThrow(() -> new CollabNotFoundException(opportunityId));
+
+        if (updateDTO.getTitle() != null && !updateDTO.getTitle().isBlank()) {
+            opportunity.setTitle(updateDTO.getTitle());
+        }
+        if (updateDTO.getCity() != null && !updateDTO.getCity().isBlank()) {
+            opportunity.setCity(updateDTO.getCity());
+        }
+        if (updateDTO.getStartDate() != null) {
+            opportunity.setStartDate(updateDTO.getStartDate());
+        }
+        if (updateDTO.getEndDate() != null) {
+            opportunity.setEndDate(updateDTO.getEndDate());
+        }
+        if (updateDTO.getDescription() != null) {
+            opportunity.setDescription(updateDTO.getDescription());
+        }
+
+        CollabOpportunity updated = collabOpportunityRepository.save(opportunity);
+        return mapper.toDTO(updated);
+    }
+
+    public void deleteCollabOpportunity(Long userId, Long opportunityId) {
+        userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+
+        CollabOpportunity opportunity = collabOpportunityRepository.findByIdAndOwnerId(opportunityId, userId)
+                .orElseThrow(() -> new CollabNotFoundException(opportunityId));
+
+        collabOpportunityRepository.delete(opportunity);
     }
 }
