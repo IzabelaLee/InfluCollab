@@ -1,0 +1,540 @@
+{
+  "info": {
+    "_postman_id": "09fa8b25-e732-408e-9b6e-acb40bc08b83",
+    "name": "Collab Opportunities",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56064777",
+    "_collection_link": "https://go.postman.co/collection/56064777-09fa8b25-e732-408e-9b6e-acb40bc08b83?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Positive scenarios",
+      "item": [
+        {
+          "name": "opportunities",
+          "item": [
+            {
+              "name": "Single collab opportunity - 200 OK",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/opportunities/4",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "opportunities",
+                    "4"
+                  ]
+                },
+                "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+              },
+              "response": []
+            },
+            {
+              "name": "All collab opportunities - 200 OK",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/opportunities",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "opportunities"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "opportunities by user",
+          "item": [
+            {
+              "name": "Single collab opportunity by user - 200 OK",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/users/1/opportunities/5",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "users",
+                    "1",
+                    "opportunities",
+                    "5"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "All collab opportunities by user - 200 OK",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/users/1/opportunities",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "users",
+                    "1",
+                    "opportunities"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create a new collab opportunity - 200 OK",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"title\": \"Available for lifestyle collaborations in Barcelona\",\r\n  \"city\": \"Barcelona\",\r\n  \"startDate\": \"2026-08-10\",\r\n  \"endDate\": \"2026-08-20\",\r\n  \"description\": \"I'll be in Barcelona creating travel and lifestyle content. Open to collaborations with hotels, restaurants, and local brands.\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/users/1/opportunities",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "users",
+                    "1",
+                    "opportunities"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete collab opportunity - 204",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/users/1/opportunities/5",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "users",
+                    "1",
+                    "opportunities",
+                    "5"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update collab opportunity data - 200 OK",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"title\": \"Available for lifestyle collaborations in Barcelona\",\r\n  \"city\": \"Barcelona\",\r\n  \"startDate\": \"2026-08-16\",\r\n  \"endDate\": \"2026-08-11\",\r\n  \"description\": \"I'll be in Barcelona creating travel and lifestyle content. Open to collaborations with hotels, restaurants, and local brands.\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/users/1/opportunities/4",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "users",
+                    "1",
+                    "opportunities",
+                    "4"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update collab opportunity with single field - 200 OK",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"startDate\": \"2026-09-10\",\r\n  \"endDate\": \"2026-09-11\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/users/1/opportunities/4",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "users",
+                    "1",
+                    "opportunities",
+                    "4"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Negative scenarios",
+      "item": [
+        {
+          "name": "opportunities",
+          "item": [
+            {
+              "name": "Error 404 - Incorrect URL",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/opportunitiess",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "opportunitiess"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Error 404 - Not existing user",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/opportunities/141",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "opportunities",
+                    "141"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "opportunities by user",
+          "item": [
+            {
+              "name": "Error 404 - Incorrect URL",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/users/1/opportunities4",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "users",
+                    "1",
+                    "opportunities4"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Error 404 - not existing opportunity",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/users/1/opportunities/55445",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "users",
+                    "1",
+                    "opportunities",
+                    "55445"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Error 404 - User Not Found",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"title\": \"Collaboration in Barcelona\",\r\n  \"city\": \"Barcelona\",\r\n  \"startDate\": \"2026-08-10\",\r\n  \"endDate\": \"2026-08-20\",\r\n  \"description\": \"Looking for lifestyle collaborations\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/users/999/opportunities",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "users",
+                    "999",
+                    "opportunities"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Error 400 - Missing mandatory fields",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"city\": \"Barcelona\",\r\n  \"startDate\": \"2026-08-10\",\r\n  \"endDate\": \"2026-08-20\",\r\n  \"description\": \"Looking for lifestyle collaborations\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/users/1/opportunities",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "users",
+                    "1",
+                    "opportunities"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Error 400 - Blank value for mandatory field",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"title\": \"\",\r\n  \"city\": \"Barcelona\",\r\n  \"startDate\": \"2026-08-10\",\r\n  \"endDate\": \"2026-08-20\",\r\n  \"description\": \"Looking for lifestyle collaborations\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/users/1/opportunities",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "users",
+                    "1",
+                    "opportunities"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Error 400 - End date before start date",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"title\": \"Available for lifestyle collaborations in Barcelona\",\r\n  \"city\": \"Barcelona\",\r\n  \"startDate\": \"2026-08-10\",\r\n  \"endDate\": \"2026-07-20\",\r\n  \"description\": \"I'll be in Barcelona creating travel and lifestyle content. Open to collaborations with hotels, restaurants, and local brands.\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/users/1/opportunities",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "users",
+                    "1",
+                    "opportunities"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Error 404 - Delete not existing user",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/users/1/opportunities/65",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "users",
+                    "1",
+                    "opportunities",
+                    "65"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Error 404 - Bad request for Update Collab Opportunity",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"city\": \"Barcelona\",\r\n  \"startDate\": \"2026-08-10\",\r\n  \"endDate\": \"2026-08-20\",\r\n  \"description\": \"Looking for lifestyle collaborations\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/users/1/opportunities/4",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "users",
+                    "1",
+                    "opportunities",
+                    "4"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Error 400 - Update collab opportunity with single field",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"startDate\": \"2026-08-10\",\r\n  \"endDate\": \"2026-08-09\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/users/1/opportunities/4",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "users",
+                    "1",
+                    "opportunities",
+                    "4"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
