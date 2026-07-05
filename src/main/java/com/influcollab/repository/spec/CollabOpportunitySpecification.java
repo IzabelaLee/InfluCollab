@@ -20,7 +20,7 @@ public class CollabOpportunitySpecification {
                 cb.lessThanOrEqualTo(root.get("endDate"), endDate);
     }
 
-    public static Specification<CollabOpportunity> hasOwnerId(String ownerId) {
+    public static Specification<CollabOpportunity> hasOwnerId(Long ownerId) {
         return (root, query, cb) ->
                 cb.equal(root.get("owner").get("id"), ownerId);
     }

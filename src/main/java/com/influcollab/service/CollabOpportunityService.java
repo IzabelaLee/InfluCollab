@@ -10,6 +10,8 @@ import com.influcollab.exception.UserNotFoundException;
 import com.influcollab.repository.CollabOpportunityRepository;
 import com.influcollab.repository.UserRepository;
 import com.influcollab.repository.spec.CollabOpportunitySpecification;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +36,7 @@ public class CollabOpportunityService {
         this.mapper = mapper;
     }
 
-    public List<CollabOpportunityDTO> getAllCollabOpportunities(String city, LocalDate from, LocalDate to, String ownerId) {
+    public Page<CollabOpportunityDTO> getAllCollabOpportunities(String city, LocalDate from, LocalDate to, Long ownerId, Pageable pageable) {
         Specification<CollabOpportunity> spec = Specification.where(null);
 
         if (city != null && !city.isBlank()) {
@@ -49,14 +51,14 @@ public class CollabOpportunityService {
             spec = spec.and(CollabOpportunitySpecification.endsOnOrBefore(to));
         }
 
-        if (ownerId != null && !ownerId.isBlank()) {
-            spec = spec.and(CollabOpportunitySpecification.hasOwnerId(ownerId.trim()));
+        if (ownerId != null) {
+            spec = spec.and(CollabOpportunitySpecification.hasOwnerId(ownerId));
         }
 
-        return collabOpportunityRepository.findAll(spec)
-                .stream()
-                .map(mapper::toDTO)
-                .toList();
+        Page<CollabOpportunity> page =
+                collabOpportunityRepository.findAll(spec, pageable);
+
+        return page.map(mapper::toDTO);
     }
 
     public CollabOpportunityDTO getCollabOpportunityById(Long id) {

@@ -2,10 +2,11 @@ package com.influcollab.controller;
 
 import com.influcollab.dto.CollabOpportunityDTO;
 import com.influcollab.service.CollabOpportunityService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @RestController
 @RequestMapping("/opportunities")
@@ -18,12 +19,13 @@ public class CollabOpportunityController {
     }
 
     @GetMapping
-    public List<CollabOpportunityDTO> getAllCollabOpportunities(@RequestParam(required = false) String city,
+    public Page<CollabOpportunityDTO> getAllCollabOpportunities(@RequestParam(required = false) String city,
                                                                 @RequestParam(required = false) LocalDate from,
                                                                 @RequestParam(required = false) LocalDate to,
-                                                                @RequestParam(required = false) String ownerId
+                                                                @RequestParam(required = false) Long ownerId,
+                                                                Pageable pageable
     ) {
-        return service.getAllCollabOpportunities(city, from, to, ownerId);
+        return service.getAllCollabOpportunities(city, from, to, ownerId, pageable);
     }
 
     @GetMapping("/{id}")
