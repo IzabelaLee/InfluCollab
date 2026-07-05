@@ -4,6 +4,8 @@ import com.influcollab.dto.CollabOpportunityDTO;
 import com.influcollab.service.CollabOpportunityService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -23,7 +25,7 @@ public class CollabOpportunityController {
                                                                 @RequestParam(required = false) LocalDate from,
                                                                 @RequestParam(required = false) LocalDate to,
                                                                 @RequestParam(required = false) Long ownerId,
-                                                                Pageable pageable
+                                                                @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
         return service.getAllCollabOpportunities(city, from, to, ownerId, pageable);
     }
