@@ -40,6 +40,33 @@ Each opportunity contains:
 - travel dates
 - description
 - owner
+### Opportunity Search, Filtering, Sorting and Pagination
+
+The opportunity board supports advanced searching functionality.
+
+Implemented features:
+
+- Filter opportunities by city
+- Filter opportunities by start date
+- Filter opportunities by end date
+- Filter opportunities by owner
+- Combine multiple filters using dynamic queries
+- Sort results by selected fields
+- Paginate large result sets
+
+### Example requests
+
+| Description | Endpoint |
+|---|---|
+| Filter by city | `GET /opportunities?city=Barcelona` |
+| Filter by city and start date | `GET /opportunities?city=Barcelona&from=2026-08-10` |
+| Sort by start date ascending | `GET /opportunities?sort=startDate,asc` |
+| Get paginated results | `GET /opportunities?page=0&size=10` |
+
+
+The filtering system is implemented using Spring Data JPA Specifications, allowing dynamic query construction without complex conditional logic.
+
+Pagination is implemented using Spring Data's `Pageable` mechanism.
 
 ### Validation & Error Handling
 
