@@ -1,0 +1,113 @@
+{
+  "info": {
+    "_postman_id": "e0abc361-2ff1-409c-b960-f30935918570",
+    "name": "Filter, sort and pagination",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56064777",
+    "_collection_link": "https://go.postman.co/collection/56064777-e0abc361-2ff1-409c-b960-f30935918570?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Filter opportunities by city",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/opportunities?city=Barcelona",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "opportunities"
+          ],
+          "query": [
+            {
+              "key": "city",
+              "value": "Barcelona"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Filter opportunities by dates - combined filter",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/opportunities?from=2026-07-10&to=2026-09-10",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "opportunities"
+          ],
+          "query": [
+            {
+              "key": "from",
+              "value": "2026-07-10"
+            },
+            {
+              "key": "to",
+              "value": "2026-09-10"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Pagination of opportunities",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/opportunities?page=0&size=4",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "opportunities"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "4"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Sort opportunities",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/opportunities",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "opportunities"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
