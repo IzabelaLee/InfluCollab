@@ -68,6 +68,38 @@ The filtering system is implemented using Spring Data JPA Specifications, allowi
 
 Pagination is implemented using Spring Data's `Pageable` mechanism.
 
+### Collaboration Requests
+
+Creators can send collaboration requests for available opportunities.
+
+A collaboration request represents a connection between a creator interested in collaboration and an existing collaboration opportunity.
+
+Implemented endpoints include:
+
+- Create a collaboration request for an opportunity
+- Retrieve requests sent by a user
+- Retrieve requests received by an opportunity owner
+- Accept a collaboration request
+- Reject a collaboration request
+
+Each collaboration request contains:
+
+- sender
+- collaboration opportunity
+- message
+- status
+- creation timestamp
+
+Request lifecycle is managed using request statuses: PENDING, ACCEPTED, REJECTED.
+
+Business rules implemented:
+
+- A user cannot send a request to their own opportunity
+- New requests are always created with `PENDING` status
+- Only the opportunity owner can accept or reject requests
+- Only pending requests can change their status
+
+
 ### Validation & Error Handling
 
 Implemented validation and exception handling for common API scenarios:
