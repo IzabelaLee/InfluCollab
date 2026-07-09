@@ -109,4 +109,36 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.CONFLICT)
                 .body(response);
     }
+
+    @ExceptionHandler(CollaborationRequestNotFound.class)
+    public ResponseEntity<ErrorResponse> handleCollaborationRequestNotFound(
+            CollaborationRequestNotFound ex) {
+
+        ErrorResponse response = new ErrorResponse(
+                Instant.now(),
+                HttpStatus.NOT_FOUND.value(),
+                "Collaboration Request Not Found",
+                Map.of("message", ex.getMessage())
+        );
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(response);
+    }
+
+    @ExceptionHandler(UnauthorizedRequestException.class)
+    public ResponseEntity<ErrorResponse> handleUnauthorizedRequest(
+            UnauthorizedRequestException ex) {
+
+        ErrorResponse response = new ErrorResponse(
+                Instant.now(),
+                HttpStatus.FORBIDDEN.value(),
+                "Unauthorized Request",
+                Map.of("message", ex.getMessage())
+        );
+
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(response);
+    }
 }

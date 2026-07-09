@@ -2,10 +2,7 @@ package com.influcollab.controller;
 
 import com.influcollab.entity.CollaborationRequest;
 import com.influcollab.service.CollaborationRequestService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,5 +23,15 @@ public class CollaborationRequestController {
     @GetMapping("/received")
     public List<CollaborationRequest> getReceivedRequests(@RequestParam(required = true) Long ownerId) {
         return service.getReceivedRequests(ownerId);
+    }
+
+    @PutMapping("/{requestId}/accept")
+    public CollaborationRequest acceptRequest(@PathVariable Long requestId, @RequestParam Long ownerId) {
+        return service.acceptRequest(requestId, ownerId);
+    }
+
+    @PutMapping("/{requestId}/reject")
+    public CollaborationRequest rejectRequest(@PathVariable Long requestId, @RequestParam Long ownerId) {
+        return service.rejectRequest(requestId, ownerId);
     }
 }
