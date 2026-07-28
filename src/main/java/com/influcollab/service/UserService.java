@@ -4,6 +4,7 @@ import com.influcollab.entity.User;
 import com.influcollab.exception.EmailAlreadyExistsException;
 import com.influcollab.exception.UserNotFoundException;
 import com.influcollab.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +13,11 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User createUser(User user) {
@@ -22,6 +25,9 @@ public class UserService {
         if (repository.existsByEmail(user.getEmail())) {
             throw new EmailAlreadyExistsException(user.getEmail());
         }
+
+        // Hash password before saving
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return repository.save(user);
     }
@@ -55,6 +61,10 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException(id));
 
         repository.delete(user);
+    }
+
+    public boolean verifyPassword(String rawPassword, String hashedPassword) {
+        return passwordEncoder.matches(rawPassword, hashedPassword);
     }
 
 }
