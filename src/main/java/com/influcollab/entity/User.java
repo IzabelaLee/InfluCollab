@@ -26,17 +26,22 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    @NotBlank(message = "Password is required")
+    @Column(nullable = false)
+    private String password;
+
     private String phoneNumber;
     private String city;
 
     public User() {
     }
 
-    public User(String name, String surname, String channelName, String email) {
+    public User(String name, String surname, String channelName, String email, String password) {
         this.name = name;
         this.surname = surname;
         this.channelName = channelName;
         this.email = email;
+        this.password = password;
     }
 
     public Long getId() {
@@ -77,6 +82,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPhoneNumber() {
