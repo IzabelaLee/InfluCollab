@@ -26,7 +26,6 @@ public class UserService {
             throw new EmailAlreadyExistsException(user.getEmail());
         }
 
-        // Hash password before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return repository.save(user);
