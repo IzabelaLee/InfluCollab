@@ -1,16 +1,14 @@
 package com.influcollab.dto;
 
-import com.influcollab.entity.User;
-
 public class LoginResponse {
 
     private String token;
-    private User user;
+    private UserSummaryDTO user;
 
     public LoginResponse() {
     }
 
-    public LoginResponse(String token, User user) {
+    public LoginResponse(String token, UserSummaryDTO user) {
         this.token = token;
         this.user = user;
     }
@@ -23,11 +21,11 @@ public class LoginResponse {
         this.token = token;
     }
 
-    public User getUser() {
+    public UserSummaryDTO getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserSummaryDTO user) {
         this.user = user;
     }
 }

@@ -2,6 +2,7 @@ package com.influcollab.controller;
 
 import com.influcollab.dto.LoginRequest;
 import com.influcollab.dto.LoginResponse;
+import com.influcollab.dto.UserSummaryDTO;
 import com.influcollab.entity.User;
 import com.influcollab.service.AuthenticationService;
 import com.influcollab.service.JwtService;
@@ -28,8 +29,17 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request) {
         User user = authenticationService.authenticate(request);
+
         String token = jwtService.generateToken(user.getId(), user.getEmail());
-        LoginResponse response = new LoginResponse(token, user);
+
+        UserSummaryDTO userSummary = new UserSummaryDTO(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getChannelName()
+        );
+
+        LoginResponse response = new LoginResponse(token, userSummary);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
