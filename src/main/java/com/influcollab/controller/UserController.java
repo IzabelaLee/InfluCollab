@@ -1,6 +1,7 @@
 package com.influcollab.controller;
 
 import com.influcollab.entity.User;
+import com.influcollab.service.AuthorizationService;
 import com.influcollab.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +13,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService service;
+    private final AuthorizationService authorizationService;
 
-    public UserController(UserService service) {
+    public UserController(UserService service, AuthorizationService authorizationService) {
         this.service = service;
+        this.authorizationService = authorizationService;
     }
 
     @PostMapping
@@ -35,12 +38,13 @@ public class UserController {
     @PutMapping("/{id}")
     public User updateUser(@PathVariable Long id, @Valid
     @RequestBody User user) {
-
+        authorizationService.verifyOwnership(id);
         return service.updateUser(id, user);
     }
 
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
+        authorizationService.verifyOwnership(id);
         service.deleteUser(id);
     }
 }
