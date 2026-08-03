@@ -13,19 +13,19 @@ public class CollabOpportunityMapper {
         }
 
         User creator = opportunity.getUser();
-        UserSummaryDTO creatorDTO = creator != null 
-            ? new UserSummaryDTO(creator.getId(), creator.getName(), creator.getChannelName())
-            : null;
+        UserSummaryDTO creatorDTO = creator != null
+                ? new UserSummaryDTO(creator.getId(), creator.getName(), creator.getEmail(), creator.getChannelName())
+                : null;
 
         return new CollabOpportunityDTO(
-            opportunity.getId(),
-            opportunity.getTitle(),
-            opportunity.getCity(),
-            opportunity.getStartDate(),
-            opportunity.getEndDate(),
-            opportunity.getDescription(),
-            opportunity.getCreatedAt(),
-            creatorDTO
+                opportunity.getId(),
+                opportunity.getTitle(),
+                opportunity.getCity(),
+                opportunity.getStartDate(),
+                opportunity.getEndDate(),
+                opportunity.getDescription(),
+                opportunity.getCreatedAt(),
+                creatorDTO
         );
     }
 }

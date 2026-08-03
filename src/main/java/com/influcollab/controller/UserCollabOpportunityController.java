@@ -3,6 +3,7 @@ package com.influcollab.controller;
 import com.influcollab.dto.CollabOpportunityDTO;
 import com.influcollab.dto.UpdateCollabOpportunityDTO;
 import com.influcollab.entity.CollabOpportunity;
+import com.influcollab.service.AuthorizationService;
 import com.influcollab.service.CollabOpportunityService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -16,9 +17,11 @@ import java.util.List;
 public class UserCollabOpportunityController {
 
     private final CollabOpportunityService service;
+    private final AuthorizationService authorizationService;
 
-    public UserCollabOpportunityController(CollabOpportunityService service) {
+    public UserCollabOpportunityController(CollabOpportunityService service, AuthorizationService authorizationService) {
         this.service = service;
+        this.authorizationService = authorizationService;
     }
 
     @GetMapping
@@ -39,13 +42,20 @@ public class UserCollabOpportunityController {
             @PathVariable Long userId,
             @RequestBody @Valid CollabOpportunity collabOpportunity
     ) {
+        authorizationService.verifyOwnership(userId);
+
         CollabOpportunityDTO created = service.createCollabOpportunity(collabOpportunity, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @PutMapping("/{opportunityId}")
-    public CollabOpportunityDTO updateCollabOpportunity(@PathVariable Long userId, @PathVariable Long opportunityId, @Valid
-    @RequestBody CollabOpportunity collabOpportunity) {
+    public CollabOpportunityDTO updateCollabOpportunity(
+            @PathVariable Long userId,
+            @PathVariable Long opportunityId,
+            @Valid @RequestBody CollabOpportunity collabOpportunity
+    ) {
+        authorizationService.verifyOwnership(userId);
+
         return service.updateCollabOpportunity(userId, opportunityId, collabOpportunity);
     }
 
@@ -55,6 +65,8 @@ public class UserCollabOpportunityController {
             @PathVariable Long opportunityId,
             @Valid @RequestBody UpdateCollabOpportunityDTO updateDTO
     ) {
+        authorizationService.verifyOwnership(userId);
+
         return service.updateCollabOpportunityDetail(userId, opportunityId, updateDTO);
     }
 
@@ -63,6 +75,8 @@ public class UserCollabOpportunityController {
             @PathVariable Long userId,
             @PathVariable Long opportunityId
     ) {
+        authorizationService.verifyOwnership(userId);
+
         service.deleteCollabOpportunity(userId, opportunityId);
         return ResponseEntity.noContent().build();
     }
