@@ -30,7 +30,7 @@ public class AuthController {
     public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request) {
         User user = authenticationService.authenticate(request);
 
-        String token = jwtService.generateToken(user.getId(), user.getEmail());
+        String token = jwtService.generateToken(user.getId(), user.getEmail(), user.getRole());
 
         UserSummaryDTO userSummary = new UserSummaryDTO(
                 user.getId(),

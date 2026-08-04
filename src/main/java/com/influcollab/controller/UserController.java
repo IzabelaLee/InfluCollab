@@ -4,6 +4,7 @@ import com.influcollab.entity.User;
 import com.influcollab.service.AuthorizationService;
 import com.influcollab.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,9 +43,9 @@ public class UserController {
         return service.updateUser(id, user);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
-        authorizationService.verifyOwnership(id);
         service.deleteUser(id);
     }
 }
