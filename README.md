@@ -130,6 +130,41 @@ Location:
 
 ---
 
+## Security & Authentication
+
+The application implements JWT-based stateless authentication with role-based authorization.
+
+### Authentication
+
+- User registration with email and password
+- Passwords are securely hashed with BCrypt before storage
+- Login endpoint (`POST /auth/login`) validates credentials and returns JWT token
+- Client includes token in `Authorization: Bearer <token>` header for subsequent requests
+- Token is validated on every request via JWT filter
+
+### Authorization
+
+**Protected Endpoints:**
+- POST/PUT/DELETE operations on users and opportunities require authentication
+- GET endpoints remain public (anyone can browse users and opportunities)
+
+**Ownership-Based Access:**
+- Users can only modify their own profile and opportunities
+- Attempting to modify another user's resource returns 403 Forbidden
+
+**Role-Based Access:**
+- Default role (`ROLE_USER`): regular user can only delete their own account
+- Admin role (`ROLE_ADMIN`): can delete any user account
+
+### Error Responses
+
+| Status | Scenario |
+|--------|----------|
+| 401 Unauthorized | Missing or invalid token |
+| 403 Forbidden | Valid token but insufficient permissions (e.g., modifying another user's data) |
+
+---
+
 ## Backend Concepts Demonstrated
 
 The project currently demonstrates:
@@ -146,6 +181,12 @@ The project currently demonstrates:
 - Repository query methods
 - CRUD operations
 - Swagger / OpenAPI documentation
+- **Spring Security & Authentication**
+- **JWT token generation & validation**
+- **BCrypt password hashing**
+- **Role-based authorization**
+- **Method-level security with @PreAuthorize**
+- **Ownership-based access control**
 
 ---
 
