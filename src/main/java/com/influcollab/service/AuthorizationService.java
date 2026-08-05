@@ -46,4 +46,17 @@ public class AuthorizationService {
             throw new UnauthorizedRequestException();
         }
     }
+
+    public boolean isOwner(Long userId) {
+        try {
+            User authenticatedUser = getAuthenticatedUser();
+            return authenticatedUser.getId().equals(userId);
+        } catch (UnauthorizedRequestException e) {
+            return false;
+        }
+    }
+
+    public boolean isOpportunityOwner(Long opportunityUserId) {
+        return isOwner(opportunityUserId);
+    }
 }

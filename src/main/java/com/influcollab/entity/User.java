@@ -33,6 +33,9 @@ public class User {
     private String phoneNumber;
     private String city;
 
+    @Column(nullable = false)
+    private String role = "ROLE_USER";
+
     public User() {
     }
 
@@ -108,4 +111,11 @@ public class User {
         this.city = city;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

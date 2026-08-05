@@ -1,6 +1,7 @@
 package com.influcollab.security;
 
 import com.influcollab.entity.User;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class CustomUserDetails implements UserDetails {
@@ -23,8 +24,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public java.util.Collection<? extends org.springframework.security.core.GrantedAuthority> getAuthorities() {
-        // Return the user's roles/authorities if applicable
-        return java.util.Collections.emptyList();
+        return java.util.Collections.singletonList(new SimpleGrantedAuthority(user.getRole()));
     }
 
     @Override

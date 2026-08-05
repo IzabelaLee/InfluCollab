@@ -8,6 +8,7 @@ import com.influcollab.service.CollabOpportunityService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -70,13 +71,12 @@ public class UserCollabOpportunityController {
         return service.updateCollabOpportunityDetail(userId, opportunityId, updateDTO);
     }
 
+    @PreAuthorize("hasRole('ADMIN') or @authorizationService.isOpportunityOwner(#userId)")
     @DeleteMapping("/{opportunityId}")
     public ResponseEntity<Void> deleteCollabOpportunity(
             @PathVariable Long userId,
             @PathVariable Long opportunityId
     ) {
-        authorizationService.verifyOwnership(userId);
-
         service.deleteCollabOpportunity(userId, opportunityId);
         return ResponseEntity.noContent().build();
     }
