@@ -27,12 +27,6 @@ import static org.mockito.Mockito.*;
 class CollaborationRequestServiceTest {
 
     @Mock
-    private UserRepository userRepository;
-
-    @Mock
-    private CollabOpportunityRepository collabOpportunityRepository;
-
-    @Mock
     private CollaborationRequestRepository collaborationRequestRepository;
 
     @InjectMocks
