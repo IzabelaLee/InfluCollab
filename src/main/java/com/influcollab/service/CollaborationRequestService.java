@@ -38,6 +38,12 @@ public class CollaborationRequestService {
         if (!request.getOpportunity().getUser().getId().equals(ownerId)) {
             throw new UnauthorizedRequestException();
         }
+
+        if (request.getStatus() != CollaborationRequestStatus.PENDING) {
+            throw new IllegalStateException(
+                    "Only pending requests can be accepted"
+            );
+        }
         request.setStatus(CollaborationRequestStatus.ACCEPTED);
 
         return collaborationRequestRepository.save(request);
@@ -49,6 +55,13 @@ public class CollaborationRequestService {
         if (!request.getOpportunity().getUser().getId().equals(ownerId)) {
             throw new UnauthorizedRequestException();
         }
+
+        if (request.getStatus() != CollaborationRequestStatus.PENDING) {
+            throw new IllegalStateException(
+                    "Only pending requests can be rejected"
+            );
+        }
+
         request.setStatus(CollaborationRequestStatus.REJECTED);
         return collaborationRequestRepository.save(request);
     }
