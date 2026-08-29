@@ -1,5 +1,6 @@
 package com.influcollab.service;
 
+import com.influcollab.enums.UserRole;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -18,7 +19,7 @@ public class JwtService {
     @Value("${jwt.expiration:86400000}")
     private long jwtExpiration;
 
-    public String generateToken(Long userId, String email, String role) {
+    public String generateToken(Long userId, String email, UserRole role) {
         SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
 
         return Jwts.builder()

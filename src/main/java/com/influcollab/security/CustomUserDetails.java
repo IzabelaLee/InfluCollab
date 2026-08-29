@@ -24,7 +24,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public java.util.Collection<? extends org.springframework.security.core.GrantedAuthority> getAuthorities() {
-        return java.util.Collections.singletonList(new SimpleGrantedAuthority(user.getRole()));
+        return java.util.Collections.singletonList(new SimpleGrantedAuthority(user.getRole().name()));
     }
 
     @Override
