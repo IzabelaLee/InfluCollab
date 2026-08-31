@@ -4,11 +4,9 @@ InfluCollab is a backend application designed to help content creators discover 
 
 Creators can publish upcoming trips and availability, allowing other creators to find potential collaborations in specific locations and time periods.
 
-The project is being developed incrementally using an Agile approach, with each iteration delivering a complete and tested piece of functionality.
-
 ---
 
-## Current Features
+## Features
 
 ### User Management
 
@@ -130,6 +128,36 @@ Location:
 
 ---
 
+### Automated Testing & CI
+
+The project includes automated tests covering the main application layers and security functionality.
+
+- Unit and controller tests using JUnit 5, Mockito, and Spring Boot Test
+- Tests covering controllers, services, authentication, authorization, and JWT functionality
+- Positive and negative test scenarios for API behaviour and validation
+- GitHub Actions automatically runs the Maven test suite on pull requests
+- Pull requests must pass the test suite before being merged
+
+The CI workflow uses Java 21 and Maven to automatically verify that changes do not introduce regressions.
+
+## Running tests
+
+Unit and integration tests are provided under `src/test/java`.
+
+Run locally with Maven:
+
+```bash
+./mvnw test
+```
+
+Quick notes:
+- Tests use JUnit 5 and Mockito (included via `spring-boot-starter-test`).
+- If you run tests that depend on application properties (e.g., JWT secret), set environment properties or provide defaults in `application.properties`.
+
+CI: A GitHub Actions workflow can be added to run `mvnw test` on push/PR. If you want, I can scaffold the workflow file next.
+
+---
+
 ## Security & Authentication
 
 The application implements JWT-based stateless authentication with role-based authorization.
@@ -150,7 +178,7 @@ The application implements JWT-based stateless authentication with role-based au
 
 **Ownership-Based Access:**
 - Users can only modify their own profile and opportunities
-- Attempting to modify another user's resource returns 403 Forbidden
+- Attempting to modify another user's resource is rejected with 403 Forbidden
 
 **Role-Based Access:**
 - Default role (`ROLE_USER`): regular user can only delete their own account
@@ -181,13 +209,16 @@ The project currently demonstrates:
 - Repository query methods
 - CRUD operations
 - Swagger / OpenAPI documentation
-- **Spring Security & Authentication**
-- **JWT token generation & validation**
-- **BCrypt password hashing**
-- **Role-based authorization**
-- **Method-level security with @PreAuthorize**
-- **Ownership-based access control**
-
+- Spring Security & Authentication
+- JWT token generation & validation
+- BCrypt password hashing
+- Role-based authorization
+- Method-level security with @PreAuthorize
+- Ownership-based access control
+- Unit testing
+- Integration / controller testing
+- Continuous Integration (CI)
+- 
 ---
 
 ## Technology Stack
@@ -199,6 +230,9 @@ The project currently demonstrates:
 - Maven
 - Swagger / OpenAPI
 - Postman
+- JUnit 5
+- Mockito
+- GitHub Actions
 
 ---
 
