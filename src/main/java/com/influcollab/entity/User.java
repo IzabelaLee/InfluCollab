@@ -1,5 +1,6 @@
 package com.influcollab.entity;
 
+import com.influcollab.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -34,7 +35,8 @@ public class User {
     private String city;
 
     @Column(nullable = false)
-    private String role = "ROLE_USER";
+    @Enumerated(EnumType.STRING)
+    private UserRole role = UserRole.USER_ROLE;
 
     public User() {
     }
@@ -111,11 +113,11 @@ public class User {
         this.city = city;
     }
 
-    public String getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 }
