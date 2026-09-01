@@ -254,3 +254,9 @@ Set the JWT secret and expiration using environment variables or application pro
 ```
 The API will be available at `http://localhost:8080`.
 
+### Environment Variables
+
+The application requires the following environment variables:
+
+- `DB_PASSWORD` — PostgreSQL database password
+- `JWT_SECRET` — secret key used to sign JWT tokens
