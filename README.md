@@ -229,4 +229,28 @@ The application follows a layered architecture:
 - **Repository** — handles data access through Spring Data JPA
 - **Entity** — represents persisted domain objects
 
+## Local Setup
+### Prerequisites
+
+Java 21
+PostgreSQL
+Maven
+
+#### 1. Clone the repository
+```bash
+git clone https://github.com/IzabelaLee/InfluCollab.git
+cd InfluCollab
+```
+
+#### 2. Configure the database
+Create a PostgreSQL database and configure the connection in application.properties (or environment variables).
+
+#### 3. Configure JWT
+Set the JWT secret and expiration using environment variables or application properties.
+
+#### 4. Run the application
+```bash
+./mvnw spring-boot:run
+```
+The API will be available at `http://localhost:8080`.
 
