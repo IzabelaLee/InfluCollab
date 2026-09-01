@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.influcollab.dto.LoginRequest;
 import com.influcollab.entity.User;
 import com.influcollab.enums.UserRole;
+import com.influcollab.security.CustomUserDetailsService;
 import com.influcollab.service.AuthenticationService;
 import com.influcollab.service.JwtService;
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,9 @@ class AuthControllerTest {
 
     @MockBean
     private JwtService jwtService;
+
+    @MockBean
+    private CustomUserDetailsService userDetailsService;
 
     @Test
     void shouldLoginSuccessfully() throws Exception {
