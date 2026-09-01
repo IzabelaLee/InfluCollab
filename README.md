@@ -5,10 +5,13 @@ InfluCollab is a backend application designed to help content creators discover 
 Creators can publish upcoming trips and availability, allowing other creators to find potential collaborations in specific locations and time periods.
 
 ---
-
 ## Features
 
-### User Management
+### 1. User Management
+
+Creators can create and manage their influencer profiles.
+
+Implemented endpoints include:
 
 - Create influencer profiles
 - Retrieve all profiles
@@ -16,12 +19,10 @@ Creators can publish upcoming trips and availability, allowing other creators to
 - Update profile information
 - Delete profiles
 
-### Collaboration Opportunities
-
-Users can manage their own collaboration opportunities.
+### 2. Collaboration Opportunities
+Creators can publish and manage their own collaboration opportunities, while all users can browse opportunities created by others.
 
 Implemented endpoints include:
-
 - Create a collaboration opportunity
 - Retrieve all opportunities
 - Retrieve a single opportunity
@@ -31,13 +32,35 @@ Implemented endpoints include:
 - Partially update an opportunity (PATCH)
 - Delete an opportunity
 
-Each opportunity contains:
+Business rules implemented:
 
-- title
-- city
-- travel dates
-- description
-- owner
+Users can only update or delete their own opportunities
+Opportunity travel dates must form a valid date range
+Opportunity ownership is verified before protected operations
+
+### 3. Collaboration Requests
+
+Creators can send collaboration requests for available opportunities.
+
+A collaboration request represents a connection between a creator interested in collaboration and an existing collaboration opportunity.
+
+Implemented endpoints include:
+
+- Create a collaboration request for an opportunity
+- Retrieve requests sent by a user
+- Retrieve requests received by an opportunity owner
+- Accept a collaboration request
+- Reject a collaboration request
+
+Request lifecycle is managed using request statuses: PENDING, ACCEPTED, REJECTED.
+
+Business rules implemented:
+
+- A user cannot send a request to their own opportunity
+- New requests are always created with PENDING status
+- Only the opportunity owner can accept or reject requests
+- Only pending requests can change their status
+
 ### Opportunity Search, Filtering, Sorting and Pagination
 
 The opportunity board supports advanced searching functionality.
@@ -66,39 +89,7 @@ The filtering system is implemented using Spring Data JPA Specifications, allowi
 
 Pagination is implemented using Spring Data's `Pageable` mechanism.
 
-### Collaboration Requests
-
-Creators can send collaboration requests for available opportunities.
-
-A collaboration request represents a connection between a creator interested in collaboration and an existing collaboration opportunity.
-
-Implemented endpoints include:
-
-- Create a collaboration request for an opportunity
-- Retrieve requests sent by a user
-- Retrieve requests received by an opportunity owner
-- Accept a collaboration request
-- Reject a collaboration request
-
-Each collaboration request contains:
-
-- sender
-- collaboration opportunity
-- message
-- status
-- creation timestamp
-
-Request lifecycle is managed using request statuses: PENDING, ACCEPTED, REJECTED.
-
-Business rules implemented:
-
-- A user cannot send a request to their own opportunity
-- New requests are always created with `PENDING` status
-- Only the opportunity owner can accept or reject requests
-- Only pending requests can change their status
-
-
-### Validation & Error Handling
+## Validation & Error Handling
 
 Implemented validation and exception handling for common API scenarios:
 
@@ -108,7 +99,7 @@ Implemented validation and exception handling for common API scenarios:
 - Duplicate email addresses (`409 Conflict`)
 - Business validation for travel date ranges
 
-### API Documentation
+## API Documentation
 
 Interactive API documentation is available through Swagger UI:
 
@@ -116,19 +107,17 @@ Interactive API documentation is available through Swagger UI:
 
 ![img.png](images/swagger.png)
 
-### API Testing
+## API Testing
 
 A Postman collection is included with positive and negative test scenarios.
 
-Location:
-
-`/postman/User.postman_collection.json`
+Location:`/postman-collections/`
 
 ![img_1.png](images/postman.png)
 
 ---
 
-### Automated Testing & CI
+## Automated Testing & CI
 
 The project includes automated tests covering the main application layers and security functionality.
 
@@ -150,11 +139,7 @@ Run locally with Maven:
 ./mvnw test
 ```
 
-Quick notes:
-- Tests use JUnit 5 and Mockito (included via `spring-boot-starter-test`).
-- If you run tests that depend on application properties (e.g., JWT secret), set environment properties or provide defaults in `application.properties`.
-
-CI: A GitHub Actions workflow can be added to run `mvnw test` on push/PR. If you want, I can scaffold the workflow file next.
+Tests use JUnit 5 and Mockito (included via `spring-boot-starter-test`).
 
 ---
 
@@ -186,10 +171,10 @@ The application implements JWT-based stateless authentication with role-based au
 
 ### Error Responses
 
-| Status | Scenario |
-|--------|----------|
-| 401 Unauthorized | Missing or invalid token |
-| 403 Forbidden | Valid token but insufficient permissions (e.g., modifying another user's data) |
+| Status                      | Scenario |
+|-----------------------------|----------|
+| 401 Unauthorized            | Missing or invalid token |
+| 403 Forbidden               | Valid token but insufficient permissions (e.g., modifying another user's data) |
 
 ---
 
@@ -203,7 +188,6 @@ The project currently demonstrates:
 - Entity relationships
 - DTO pattern
 - Entity-to-DTO mapping
-- Bean Validation
 - Global exception handling
 - Custom exceptions
 - Repository query methods
@@ -218,7 +202,7 @@ The project currently demonstrates:
 - Unit testing
 - Integration / controller testing
 - Continuous Integration (CI)
-- 
+
 ---
 
 ## Technology Stack
@@ -240,15 +224,9 @@ The project currently demonstrates:
 
 The application follows a layered architecture:
 
-- Controller
-- Service
-- Repository
-- Persistence (PostgreSQL)
+- **Controller** — handles HTTP requests and API responses
+- **Service** — contains business logic
+- **Repository** — handles data access through Spring Data JPA
+- **Entity** — represents persisted domain objects
 
-Additional components:
-
-- DTO layer
-- Global exception handling
-- Request validation
-- OpenAPI documentation
 
