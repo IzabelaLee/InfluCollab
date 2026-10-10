@@ -63,7 +63,7 @@ class CustomUserDetailsServiceTest {
 
         UserDetails result = service.loadUserByUsername("john@example.com");
 
-        assertEquals("USER_ROLE", result.getAuthorities().iterator().next().getAuthority());
+        assertEquals("ROLE_USER", result.getAuthorities().iterator().next().getAuthority());
         verify(userRepository).findByEmail("john@example.com");
     }
 

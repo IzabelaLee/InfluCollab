@@ -100,7 +100,7 @@ class JwtAuthenticationFilterTest {
 
         String token = "valid-token";
         String email = "john@example.com";
-        String role = "USER_ROLE";
+        String role = "ROLE_USER";
 
         when(request.getHeader("Authorization")).thenReturn("Bearer " + token);
         when(jwtService.isTokenValid(token)).thenReturn(true);
@@ -133,7 +133,7 @@ class JwtAuthenticationFilterTest {
         when(request.getHeader("Authorization")).thenReturn("Bearer " + token);
         when(jwtService.isTokenValid(token)).thenReturn(true);
         when(jwtService.extractEmail(token)).thenReturn(null);
-        when(jwtService.extractRole(token)).thenReturn("USER_ROLE");
+        when(jwtService.extractRole(token)).thenReturn("ROLE_USER");
 
         filter.doFilterInternal(request, response, filterChain);
 
@@ -163,7 +163,7 @@ class JwtAuthenticationFilterTest {
         when(request.getHeader("Authorization")).thenReturn("Bearer " + token);
         when(jwtService.isTokenValid(token)).thenReturn(true);
         when(jwtService.extractEmail(token)).thenReturn("john@example.com");
-        when(jwtService.extractRole(token)).thenReturn("USER_ROLE");
+        when(jwtService.extractRole(token)).thenReturn("ROLE_USER");
 
         filter.doFilterInternal(request, response, filterChain);
 

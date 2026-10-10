@@ -77,7 +77,7 @@ class JwtServiceTest {
 
         assertEquals("john@example.com", jwtService.extractEmail(token));
         assertEquals(42L, jwtService.extractUserId(token));
-        assertEquals("USER_ROLE", jwtService.extractRole(token));
+        assertEquals("ROLE_USER", jwtService.extractRole(token));
     }
 
     @Test

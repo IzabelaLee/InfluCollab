@@ -63,7 +63,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.surname").value("Smith"))
                 .andExpect(jsonPath("$.channelName").value("John's Channel"))
                 .andExpect(jsonPath("$.email").value("john@example.com"))
-                .andExpect(jsonPath("$.role").value("USER_ROLE"));
+                .andExpect(jsonPath("$.role").value("ROLE_USER"));
 
         verify(service).createUser(any(User.class));
     }
@@ -85,7 +85,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("$[0].surname").value("Smith"))
                 .andExpect(jsonPath("$[0].channelName").value("John's Channel"))
                 .andExpect(jsonPath("$[0].email").value("john@example.com"))
-                .andExpect(jsonPath("$[0].role").value("USER_ROLE"));
+                .andExpect(jsonPath("$[0].role").value("ROLE_USER"));
 
         verify(service).getAllUsers();
     }
@@ -105,7 +105,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.surname").value("Smith"))
                 .andExpect(jsonPath("$.channelName").value("John's Channel"))
                 .andExpect(jsonPath("$.email").value("john@example.com"))
-                .andExpect(jsonPath("$.role").value("USER_ROLE"));
+                .andExpect(jsonPath("$.role").value("ROLE_USER"));
 
         verify(service).getUserById(1L);
     }
