@@ -187,7 +187,7 @@ class UserControllerTest {
         user.setPassword("password123");
         user.setPhoneNumber("123456789");
         user.setCity("Warsaw");
-        user.setRole(UserRole.USER_ROLE);
+        user.setRole(UserRole.ROLE_USER);
 
         return user;
     }

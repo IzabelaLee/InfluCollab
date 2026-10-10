@@ -1,6 +1,6 @@
 package com.influcollab.enums;
 
 public enum UserRole {
-    ADMIN,
-    USER_ROLE;
+    ROLE_USER,
+    ROLE_ADMIN
 }

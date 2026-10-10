@@ -35,7 +35,7 @@ class JwtServiceTest {
     @Test
     void shouldGenerateValidToken() {
 
-        String token = jwtService.generateToken(1L, "john@example.com", UserRole.USER_ROLE);
+        String token = jwtService.generateToken(1L, "john@example.com", UserRole.ROLE_USER);
 
         assertNotNull(token);
         assertFalse(token.isBlank());
@@ -45,7 +45,7 @@ class JwtServiceTest {
     @Test
     void shouldExtractEmailFromToken() {
 
-        String token = jwtService.generateToken(1L, "john@example.com", UserRole.USER_ROLE);
+        String token = jwtService.generateToken(1L, "john@example.com", UserRole.ROLE_USER);
         String email = jwtService.extractEmail(token);
 
         assertEquals("john@example.com", email);
@@ -54,7 +54,7 @@ class JwtServiceTest {
     @Test
     void shouldExtractUserIdFromToken() {
 
-        String token = jwtService.generateToken(123L, "john@example.com", UserRole.USER_ROLE);
+        String token = jwtService.generateToken(123L, "john@example.com", UserRole.ROLE_USER);
 
         Long userId = jwtService.extractUserId(token);
 
@@ -64,16 +64,16 @@ class JwtServiceTest {
     @Test
     void shouldExtractRoleFromToken() {
 
-        String token = jwtService.generateToken(1L, "john@example.com", UserRole.USER_ROLE);
+        String token = jwtService.generateToken(1L, "john@example.com", UserRole.ROLE_USER);
         String role = jwtService.extractRole(token);
 
-        assertEquals(UserRole.USER_ROLE.name(), role);
+        assertEquals(UserRole.ROLE_USER.name(), role);
     }
 
     @Test
     void shouldGenerateTokenWithCorrectClaims() {
 
-        String token = jwtService.generateToken(42L, "john@example.com", UserRole.USER_ROLE);
+        String token = jwtService.generateToken(42L, "john@example.com", UserRole.ROLE_USER);
 
         assertEquals("john@example.com", jwtService.extractEmail(token));
         assertEquals(42L, jwtService.extractUserId(token));
@@ -89,7 +89,7 @@ class JwtServiceTest {
     @Test
     void shouldRejectTamperedToken() {
 
-        String token = jwtService.generateToken(1L, "john@example.com", UserRole.USER_ROLE);
+        String token = jwtService.generateToken(1L, "john@example.com", UserRole.ROLE_USER);
         String tamperedToken = token.substring(0, token.length() - 2) + "xx";
 
         assertFalse(jwtService.isTokenValid(tamperedToken));
@@ -106,7 +106,7 @@ class JwtServiceTest {
                 Jwts.builder()
                         .setSubject("john@example.com")
                         .claim("userId", 1L)
-                        .claim("role", UserRole.USER_ROLE)
+                        .claim("role", UserRole.ROLE_USER)
                         .setIssuedAt(new Date())
                         .setExpiration(
                                 new Date(
@@ -132,7 +132,7 @@ class JwtServiceTest {
                 Jwts.builder()
                         .setSubject("john@example.com")
                         .claim("userId", 1L)
-                        .claim("role", UserRole.USER_ROLE)
+                        .claim("role", UserRole.ROLE_USER)
                         .setIssuedAt(
                                 new Date(
                                         System.currentTimeMillis() - 10_000
@@ -155,7 +155,7 @@ class JwtServiceTest {
     @Test
     void shouldSetExpirationOnGeneratedToken() {
 
-        String token = jwtService.generateToken(1L, "john@example.com", UserRole.USER_ROLE);
+        String token = jwtService.generateToken(1L, "john@example.com", UserRole.ROLE_USER);
         SecretKey key = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
         Date expiration = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getExpiration();
 
