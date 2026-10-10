@@ -52,7 +52,7 @@ class AuthControllerTest {
         user.setName("John");
         user.setEmail("test@example.com");
         user.setChannelName("John's Channel");
-        user.setRole(UserRole.USER_ROLE);
+        user.setRole(UserRole.ROLE_USER);
 
         String token = "test-jwt-token";
 

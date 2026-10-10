@@ -42,6 +42,7 @@ public class SecurityConfig {
 
                         // Public endpoints - user signup
                         .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/users").permitAll()
 
                         // Public endpoints - browse all opportunities
                         .requestMatchers(HttpMethod.GET, "/opportunities").permitAll()

@@ -57,13 +57,13 @@ class CustomUserDetailsServiceTest {
     void shouldReturnUserWithCorrectRole() {
 
         User user = createUser();
-        user.setRole(UserRole.USER_ROLE);
+        user.setRole(UserRole.ROLE_USER);
 
         when(userRepository.findByEmail("john@example.com")).thenReturn(Optional.of(user));
 
         UserDetails result = service.loadUserByUsername("john@example.com");
 
-        assertEquals("USER_ROLE", result.getAuthorities().iterator().next().getAuthority());
+        assertEquals("ROLE_USER", result.getAuthorities().iterator().next().getAuthority());
         verify(userRepository).findByEmail("john@example.com");
     }
 
@@ -92,7 +92,7 @@ class CustomUserDetailsServiceTest {
         user.setChannelName("John's Channel");
         user.setEmail("john@example.com");
         user.setPassword("password123");
-        user.setRole(UserRole.USER_ROLE);
+        user.setRole(UserRole.ROLE_USER);
 
         return user;
     }
